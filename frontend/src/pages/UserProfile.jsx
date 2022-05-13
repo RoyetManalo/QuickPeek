@@ -79,7 +79,7 @@ function UserProfile() {
         {userInfo ? (
           <>
             <section className="details">
-              <img src={require("../img/user.jpg")} alt="" />
+              <img src={require("../img/user.jpg")} alt="picture" />
               <h2>
                 {userInfo.firstName} {userInfo.lastName}
               </h2>

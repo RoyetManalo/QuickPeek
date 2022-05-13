@@ -70,7 +70,10 @@ export const searchSlice = createSlice({
               ? action.payload[0].snippet
               : action.payload
             : [];
-        if (payload) {
+        console.log(payload);
+
+        console.log(action.payload);
+        if (payload.length > 0) {
           const hasProperty = (data) => data.hasOwnProperty("user");
           console.log(payload.some(hasProperty));
 

@@ -12,6 +12,7 @@ import SearchResult from "./pages/SearchResult";
 import FullSnippet from "./pages/FullSnippet";
 import Landing from "./pages/Landing";
 import CurrentUserSnippet from "./pages/CurrentUserSnippet";
+import Following from "./pages/Following";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -43,6 +44,7 @@ function App() {
             path="/me/snippet/:id"
             element={<CurrentUserSnippet />}
           ></Route>
+          <Route path="/me/following" element={<Following />}></Route>
         </Routes>
       </Router>
       <ToastContainer />

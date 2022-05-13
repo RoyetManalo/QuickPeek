@@ -1,6 +1,4 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function LeftSideMenu() {
@@ -10,7 +8,9 @@ function LeftSideMenu() {
 
   return (
     <div className="leftSideMenu">
-      <h3>Followings</h3>
+      <Link to="me/following">
+        <h3>Following</h3>
+      </Link>
       <ul>
         {following.length > 0
           ? following.map((follow) => {

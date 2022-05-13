@@ -4,14 +4,13 @@ import Users from "../components/Users";
 
 function SearchResult() {
   const { users, snippets } = useSelector((state) => state.searchResults);
-  console.log(users, snippets);
   return (
     <div className="searchResult container">
-      {users.length > 0 ? <Users users={users} /> : ""}
+      {users.length > 0 ? <Users users={users} /> : "No Users Found"}
       {snippets.length > 0 ? (
         <Snippets snippets={snippets} isProfile={false} />
       ) : (
-        "No Results Found"
+        "No Snippets Found"
       )}
     </div>
   );

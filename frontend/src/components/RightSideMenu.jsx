@@ -1,12 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { FaStar } from "react-icons/fa";
-import { openFullSnippet } from "../features/modals/modalSlice";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getSnippet } from "../features/snippets/snippetSlice";
 
 function RightSideMenu() {
-  const dispatch = useDispatch();
   const { snippets } = useSelector((state) => state.snippet);
 
   // Change feeds to all snippets
@@ -14,6 +10,8 @@ function RightSideMenu() {
   const popularSnippets = [...snippets];
 
   popularSnippets.sort((a, b) => b.star.length - a.star.length);
+
+  popularSnippets.splice(10, popularSnippets.length - 10);
 
   return (
     <div className="rightSideMenu" style={{ cursor: "pointer" }}>

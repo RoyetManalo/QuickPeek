@@ -434,10 +434,15 @@ textarea {
 .rightSideMenu .popular {
   margin-top: 1rem;
 }
-.profile,
+
 .frontPage,
-.fullSnippet {
+.fullSnippet,
+.following {
   padding-top: 8rem;
+}
+
+.profile {
+  padding-top: 6rem;
 }
 
 .login,
@@ -596,6 +601,10 @@ textarea {
 
 .grid-2 {
   grid-template-columns: 2fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* Left */
@@ -769,6 +778,19 @@ textarea {
   color: #fff;
 }
 
+.following {
+  background: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  margin-top: 6rem;
+}
+
+.details {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
 .mt-3 {
   margin-top: 3rem;
 }
