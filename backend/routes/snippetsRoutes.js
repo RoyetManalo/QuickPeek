@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getFeed,
   getSnippets,
+  getSnippet,
   getMySnippets,
   getUserSnippets,
   createSnippet,
@@ -18,6 +19,7 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 router.get("/feed", protect, getFeed);
+router.get("/one/:id", protect, getSnippet);
 router.get("/mysnippets", protect, getMySnippets);
 router.get("/savedSnippets", protect, getSavedSnippets);
 router.get("/starredSnippets", protect, getStarredSnippets);

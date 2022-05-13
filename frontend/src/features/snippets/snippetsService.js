@@ -26,6 +26,16 @@ const getSnippets = async (token) => {
   return data;
 };
 
+const getSnippet = async (id, token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const res = await axios.get(`${API_URL}one/${id}`, config);
+  const data = res.data;
+  return data;
+};
+
 const getMySnippets = async (token) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -127,6 +137,7 @@ const unStar = async (snippetID, token) => {
 export const snippetsService = {
   getFeed,
   getSnippets,
+  getSnippet,
   getSavedSnippets,
   getStarredSnippets,
   getMySnippets,

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openFullSnippet } from "../features/modals/modalSlice";
 import { FaRegCopy, FaRegStar, FaCheck, FaStar } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 import {
@@ -16,6 +16,8 @@ function Snippet({ snippet, onViewFullSnippet, isProfile }) {
   const [copied, setOnCopied] = useState(false);
   const [onStarred, setOnStarred] = useState(false);
   const [onSaved, setOnSaved] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onCopy = () => {
     navigator.clipboard.writeText(snippet.code);
     // create notif after code is copy
@@ -38,8 +40,6 @@ function Snippet({ snippet, onViewFullSnippet, isProfile }) {
 
       setOnSaved(savedSnippetsIDS.includes(snippet._id));
       setOnStarred(starredSnippetsID.includes(snippet._id));
-
-      console.log(onStarred);
     }
   });
 
@@ -63,12 +63,18 @@ function Snippet({ snippet, onViewFullSnippet, isProfile }) {
     }
   };
 
-  const dispatch = useDispatch();
-
   const onView = () => {
-    onViewFullSnippet(snippet._id);
-    dispatch(openFullSnippet());
+    // onViewFullSnippet(snippet._id);
+    // dispatch(openFullSnippet());
+
+    if (isProfile) {
+      navigate(`snippet/${snippet._id}`);
+    } else {
+      navigate(`/snippet/${snippet._id}`);
+    }
+    // history.push(`/snippet/${snippet._id}`);
   };
+
   return (
     <div className="snippet">
       <img src={require("../img/user.jpg")} alt="" className="user-avatar" />
@@ -90,9 +96,11 @@ function Snippet({ snippet, onViewFullSnippet, isProfile }) {
             <code>{snippet.code}</code>
           </pre>
         </div>
+
         <button className="btn-view" onClick={onView}>
           View Full Snippet
         </button>
+
         <button
           className="btn-copy"
           title="Copy to your clipboard"

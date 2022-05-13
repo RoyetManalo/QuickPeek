@@ -9,7 +9,9 @@ import RightSideMenu from "./components/RightSideMenu";
 import { useSelector } from "react-redux";
 import UserProfile from "./pages/UserProfile";
 import SearchResult from "./pages/SearchResult";
+import FullSnippet from "./pages/FullSnippet";
 import Landing from "./pages/Landing";
+import CurrentUserSnippet from "./pages/CurrentUserSnippet";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,6 +38,11 @@ function App() {
           <Route path="/me" element={<Profile />}></Route>
           <Route path="/profile/:id" element={<UserProfile />}></Route>
           <Route path="/search" element={<SearchResult />}></Route>
+          <Route path="/snippet/:id" element={<FullSnippet />}></Route>
+          <Route
+            path="/me/snippet/:id"
+            element={<CurrentUserSnippet />}
+          ></Route>
         </Routes>
       </Router>
       <ToastContainer />

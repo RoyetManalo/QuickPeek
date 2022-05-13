@@ -206,16 +206,14 @@ function Profile() {
       ) : (
         <h1>NOT ALLOWED</h1>
       )}
-      {formModal ? <Form addSnippet={addSnippet} /> : ""}
-      {fullSnippetModal ? (
+      {formModal && <Form addSnippet={addSnippet} />}
+      {fullSnippetModal && (
         <SnippetFull
           snippet={snippet}
           isProfile={true}
           showBtn={false}
           mySnippets={selectMySnippet}
         />
-      ) : (
-        ""
       )}
     </div>
   );

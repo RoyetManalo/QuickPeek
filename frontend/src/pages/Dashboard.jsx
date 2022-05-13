@@ -61,11 +61,8 @@ function Dashboard() {
   }, []); // i remove the user dependency because the getSnippets action redispatch every add to saved snmippets
 
   const onViewFullSnippet = (id) => {
-    console.log(id);
     const snippetFull = feed.filter((snippet) => snippet._id === id);
-    console.log(snippetFull);
     setSnippet(snippetFull[0]);
-    console.log(snippetFull[0]);
   };
 
   if (isLoading) {

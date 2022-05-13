@@ -1,14 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  FaEye,
-  FaSignInAlt,
-  FaSignOutAlt,
-  FaUser,
-  FaPlus,
-} from "react-icons/fa";
-import { logout } from "../features/auth/authSlice";
+import { FaPlus } from "react-icons/fa";
 import {
   searchUser,
   searchSnippet,
@@ -24,14 +17,6 @@ function Header() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const onLogout = () => {
-    // localStorage.removeItem("user");
-    dispatch(logout());
-    navigate("/landing");
-    // dispatch(loggedOut());
-  };
-
-  const [navbar, setNavbar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const onChange = (e) => {
     setSearchQuery(e.target.value);
@@ -63,24 +48,16 @@ function Header() {
     }
   };
 
-  useEffect(() => {
-    const changeBackground = () => {
-      if (window.scrollY >= 80) {
-        setNavbar(true);
-      } else {
-        setNavbar(false);
-      }
-    };
-
-    window.addEventListener("scroll", changeBackground);
-  });
-
   return (
-    <header className={navbar ? "header active" : "header"}>
+    <header className="header">
       <div className="header-container">
         <div className="logo">
           <Link to="/">
-            <img src={require("../img/qplogo.png")} className="logo" />
+            <img
+              src={require("../img/qplogo.png")}
+              className="logo"
+              alt="logo"
+            />
           </Link>
         </div>
         <div>
@@ -96,40 +73,6 @@ function Header() {
             />
           </form>
         </div>
-
-        {/* <ul>
-          {user ? (
-            <>
-              <li className="myProfile">
-                <Link to="/me">
-                  <FaUser />
-                  My Profile
-                </Link>
-              </li>
-              <li>
-                <button className="btn" onClick={onLogout}>
-                  <FaSignOutAlt />
-                  Logut
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">
-                  <FaSignInAlt />
-                  Log In
-                </Link>
-              </li>
-              <li>
-                <Link to="/register">
-                  <FaUser />
-                  Register
-                </Link>
-              </li>
-            </>
-          )}
-        </ul> */}
         <div className="addSnippetBtn">
           <button className="headerBtn" onClick={onFormOpen}>
             <FaPlus />

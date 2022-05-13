@@ -7,16 +7,17 @@ import {
 } from "../features/modals/modalSlice";
 import { editSnippet } from "../features/snippets/snippetSlice";
 
-function EditSnippetForm({ snippet }) {
+function EditSnippetForm() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+  const { snippet } = useSelector((state) => state.snippet);
 
   const [formData, setFormData] = useState({
-    title: snippet.title,
-    description: snippet.description,
-    language: snippet.language,
-    code: snippet.code,
+    title: snippet[0].title,
+    description: snippet[0].description,
+    language: snippet[0].language,
+    code: snippet[0].code,
   });
 
   const { title, description, language, code } = formData;
@@ -24,7 +25,7 @@ function EditSnippetForm({ snippet }) {
   const onSubmit = (e) => {
     e.preventDefault();
     const snippetToSend = {
-      _id: snippet._id,
+      _id: snippet[0]._id,
       title,
       description,
       language,

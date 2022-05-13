@@ -5,6 +5,7 @@ import userService from "../users/userService";
 const initialState = {
   feed: [],
   snippets: [],
+  snippet: [],
   mySnippets: [],
   savedSnippets: [],
   starredSnippets: [],
@@ -38,6 +39,23 @@ export const getSnippets = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token;
       return await snippetsService.getSnippets(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const getSnippet = createAsyncThunk(
+  "snippet/getOne",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await snippetsService.getSnippet(id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -227,7 +245,6 @@ export const addStar = createAsyncThunk(
   async (snippetID, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      console.log(token);
       return await snippetsService.addStar(snippetID, token);
     } catch (error) {
       const message =
@@ -246,7 +263,6 @@ export const unStar = createAsyncThunk(
   async (snippetID, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      console.log(token);
       return await snippetsService.unStar(snippetID, token);
     } catch (error) {
       const message =
@@ -265,6 +281,9 @@ export const snippetSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => initialState,
+    removeSnippet: (state) => {
+      state.snippet = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -287,6 +306,16 @@ export const snippetSlice = createSlice({
         state.snippets = action.payload;
       })
       .addCase(getSnippets.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getSnippet.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.snippet = action.payload;
+      })
+      .addCase(getSnippet.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -333,6 +362,7 @@ export const snippetSlice = createSlice({
           .indexOf(action.payload._id);
         state.mySnippets.splice(index, 1);
         state.mySnippets.splice(index, 0, action.payload);
+        state.snippet.splice(0, 1, action.payload);
       })
       .addCase(deleteSnippet.pending, (state) => {
         state.isLoading = true;
@@ -343,6 +373,7 @@ export const snippetSlice = createSlice({
           .map((snippet) => snippet._id)
           .indexOf(action.payload.id);
         state.mySnippets.splice(index, 1);
+        state.snippet.splice(0, 1);
       })
       .addCase(addToSavedSnippets.fulfilled, (state, action) => {
         state.savedSnippets.push(action.payload);
@@ -366,6 +397,7 @@ export const snippetSlice = createSlice({
           .indexOf(action.payload._id);
         state.feed.splice(index, 1, action.payload);
         state.starredSnippets.push(action.payload);
+        state.snippet.splice(0, 1, action.payload);
       })
       .addCase(unStar.fulfilled, (state, action) => {
         const index = state.feed
@@ -376,9 +408,10 @@ export const snippetSlice = createSlice({
           .map((snippet) => snippet._id)
           .indexOf(action.payload._id);
         state.starredSnippets.splice(starIndex, 1);
+        state.snippet.splice(0, 1, action.payload);
       });
   },
 });
 
-export const { reset } = snippetSlice.actions;
+export const { reset, removeSnippet } = snippetSlice.actions;
 export default snippetSlice.reducer;

@@ -12,7 +12,7 @@ const getFeed = asyncHandler(async (req, res) => {
     user: {
       $in: userFollowing,
     },
-  }).populate("user", "_id firstName lastName userName");
+  }).populate("user", "_id firstName lastName username");
 
   res.json(feed);
 });
@@ -24,7 +24,19 @@ const getSnippets = asyncHandler(async (req, res) => {
   // const snippets = await Snippet.find();
   const snippetsWithUser = await Snippet.find()
     .sort({ createdAt: "desc" })
-    .populate("user", "_id firstName lastName userName");
+    .populate("user", "_id firstName lastName username");
+
+  res.status(201).json(snippetsWithUser);
+});
+
+// @desc    Get one snippets
+// @route   GET api/snippets/:id
+// @access  private
+const getSnippet = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const snippetsWithUser = await Snippet.find({ _id: id })
+    .sort({ createdAt: "desc" })
+    .populate("user", "_id firstName lastName username");
 
   res.status(201).json(snippetsWithUser);
 });
@@ -86,7 +98,7 @@ const createSnippet = asyncHandler(async (req, res) => {
     star: [],
   });
 
-  await snippet.populate("user", "_id firstName lastName userName");
+  await snippet.populate("user", "_id firstName lastName username");
 
   if (snippet) {
     res.status(201).json({
@@ -130,7 +142,7 @@ const updateSnippet = asyncHandler(async (req, res) => {
     {
       new: true,
     }
-  );
+  ).populate("user", "firstName lastName username");
   res.status(200).json(updatedSnippet);
 });
 
@@ -294,6 +306,7 @@ const unStar = asyncHandler(async (req, res) => {
 module.exports = {
   getFeed,
   getSnippets,
+  getSnippet,
   getSavedSnippets,
   getStarredSnippets,
   getMySnippets,
