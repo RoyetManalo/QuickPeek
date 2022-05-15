@@ -3,6 +3,26 @@ const API_URL = "/api/users/";
 const ADD_FOLLOWING_API_URL = "/api/users/following/add/";
 const REMOVE_FOLLOWING_API_URL = "/api/users/following/remove/";
 
+export const getUserInfo = async (token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  console.log(token);
+
+  const res = await axios.get(`${API_URL}me`, config);
+  return res.data;
+};
+
+export const editUserInfo = async (info, token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const res = await axios.put(`${API_URL}edit`, info, config);
+  return res.data;
+};
+
 export const savedProfilePic = async (img, token) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -54,6 +74,8 @@ const removeToFollowing = async (token, userID, userIDToFollow) => {
 };
 
 export const currentUserService = {
+  getUserInfo,
+  editUserInfo,
   savedProfilePic,
   getFollowers,
   getFollowing,

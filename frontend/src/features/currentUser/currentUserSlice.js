@@ -3,6 +3,7 @@ import userService from "../users/userService";
 import currentUserService from "./currentUserService";
 
 const initialState = {
+  info: [],
   followers: [],
   following: [],
   isError: false,
@@ -10,6 +11,42 @@ const initialState = {
   isLoading: false,
   message: "",
 };
+
+export const getUserInfo = createAsyncThunk(
+  "currentUser/getInfo",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await currentUserService.getUserInfo(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const editUserInfo = createAsyncThunk(
+  "currentUser/editInfo",
+  async (info, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await currentUserService.editUserInfo(info, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const savedProfilePic = createAsyncThunk(
   "currentUser/savedProfilePic",
@@ -123,6 +160,12 @@ export const currentUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.info = action.payload;
+      })
+      .addCase(editUserInfo.fulfilled, (state, action) => {
+        state.info = action.payload;
+      })
       .addCase(getFollowers.fulfilled, (state, action) => {
         state.followers = action.payload;
       })

@@ -14,12 +14,14 @@ const {
   getFollowers,
   getFollowing,
   searchUser,
+  editUserInfo,
 } = require("../controllers/userController");
 
 router.post("/", registerUser);
 router.post("/login", userLogin);
 router.get("/me", protect, getMe);
 router.get("/search", protect, searchUser);
+router.put("/edit", protect, editUserInfo);
 router.get("/getFollowers", protect, getFollowers);
 router.get("/getFollowing", protect, getFollowing);
 router.get("/profile/:id", protect, getUserInfo);

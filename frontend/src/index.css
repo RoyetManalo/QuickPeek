@@ -791,6 +791,21 @@ textarea {
   margin-bottom: 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+.userEditForm form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #828282;
+}
+.userEditForm form button {
+  padding: 10px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
 .mt-3 {
   margin-top: 3rem;
 }

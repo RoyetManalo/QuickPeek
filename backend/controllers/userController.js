@@ -104,6 +104,31 @@ const searchUser = asyncHandler(async (req, res) => {
   res.json(result);
 });
 
+const editUserInfo = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user);
+
+  if (!user) {
+    throw new Error("user not found");
+  }
+
+  // Check for user
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  // Make sure the logged in user matches the goal user
+  if (user._id.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.user, req.body, {
+    new: true,
+  }).select("_id firstName lastName username email");
+  res.status(200).json(updatedUser);
+});
+
 const getFollowers = asyncHandler(async (req, res) => {
   const user = await User.find({ _id: req.user }).populate(
     "followers",
@@ -212,6 +237,7 @@ module.exports = {
   userLogin,
   getMe,
   searchUser,
+  editUserInfo,
   getFollowers,
   getFollowing,
   getUserInfo,

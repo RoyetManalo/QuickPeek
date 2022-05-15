@@ -16,6 +16,7 @@ import Spinner from "../components/Spinner";
 import {
   getFollowers,
   getFollowing,
+  getUserInfo,
 } from "../features/currentUser/currentUserSlice";
 import { reset } from "../features/search/searchSlice";
 

@@ -9,7 +9,12 @@ import {
   getMySnippets,
 } from "../features/snippets/snippetSlice";
 import Spinner from "../components/Spinner";
-import { savedProfilePic } from "../features/currentUser/currentUserSlice";
+import {
+  savedProfilePic,
+  editUserInfo,
+  getUserInfo,
+} from "../features/currentUser/currentUserSlice";
+import { FaRegEdit } from "react-icons/fa";
 
 function Profile() {
   const navigate = useNavigate();
@@ -29,13 +34,18 @@ function Profile() {
     code: "",
   });
 
+  const [edit, setEdit] = useState(false);
+
   const { mySnippets, savedSnippets } = useSelector((state) => state.snippet);
   const { user } = useSelector((state) => state.auth);
+  const { info } = useSelector((state) => state.currentUser);
+  const [formData, setFormData] = useState({
+    firstName: info.firstName,
+    lastName: info.lastName,
+    username: info.username,
+  });
 
-  // const mySnippets = snippets.filter((snippet) => snippet.user === user._id);
-
-  // sample data
-  // const savedSnippets = mySnippets.filter((snippet) => snippet.id === 0);
+  const { firstName, lastName, username } = formData;
 
   const onChoose = (e) => {
     const id = e.target.id;
@@ -91,12 +101,34 @@ function Profile() {
     setSelectedFile(undefined);
   };
 
+  const editProfile = () => {
+    setEdit(true);
+  };
+
+  const cancelEdit = (e) => {
+    e.preventDefault();
+    setEdit(false);
+  };
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const submitChanges = (e) => {
+    e.preventDefault();
+    dispatch(editUserInfo(formData));
+    setEdit(false);
+  };
+
   useEffect(() => {
     if (!user) {
       navigate("/landing");
     }
 
-    // dispatch(getSnippets());
+    dispatch(getUserInfo());
     dispatch(getMySnippets());
 
     if (!selectedFile) {
@@ -120,7 +152,21 @@ function Profile() {
     <div className="profile container">
       {user ? (
         <>
-          <section className="details">
+          <section className="details" style={{ position: "relative" }}>
+            <button
+              style={{
+                position: "absolute",
+                right: "1rem",
+                fontSize: "1.2rem",
+                border: "none",
+                background: "none",
+                cursor: "pointer",
+              }}
+              onClick={editProfile}
+            >
+              <FaRegEdit />
+            </button>
+
             {selectedFile ? (
               <>
                 <img
@@ -154,10 +200,49 @@ function Profile() {
             <div className="hidden">
               <input type="file" onChange={onImageChange} ref={imageUpload} />
             </div>
-            <h2>
-              {user.firstName} {user.lastName}
-            </h2>
-            <p className="center">@{user.username}</p>
+            {edit ? (
+              <div className="userEditForm">
+                <form className="flex flex-column">
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={onChange}
+                    name="firstName"
+                  />
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={onChange}
+                    name="lastName"
+                  />
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={onChange}
+                    name="username"
+                  />
+                  <div>
+                    <button
+                      type="submit"
+                      className="danger"
+                      onClick={submitChanges}
+                    >
+                      Submit
+                    </button>
+                    <button className="edit-btn" onClick={cancelEdit}>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <div className="userDetails">
+                <h2>
+                  {info.firstName} {info.lastName}
+                </h2>
+                <p className="center">@{info.username}</p>
+              </div>
+            )}
           </section>
           <section>
             <div className="title">
