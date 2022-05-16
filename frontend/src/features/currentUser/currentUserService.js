@@ -8,8 +8,6 @@ export const getUserInfo = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  console.log(token);
-
   const res = await axios.get(`${API_URL}me`, config);
   return res.data;
 };

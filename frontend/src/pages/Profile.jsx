@@ -39,10 +39,12 @@ function Profile() {
   const { mySnippets, savedSnippets } = useSelector((state) => state.snippet);
   const { user } = useSelector((state) => state.auth);
   const { info } = useSelector((state) => state.currentUser);
+  console.log(info);
+
   const [formData, setFormData] = useState({
-    firstName: info.firstName,
-    lastName: info.lastName,
-    username: info.username,
+    firstName: "",
+    lastName: "",
+    username: "",
   });
 
   const { firstName, lastName, username } = formData;
@@ -121,6 +123,13 @@ function Profile() {
     e.preventDefault();
     dispatch(editUserInfo(formData));
     setEdit(false);
+
+    setFormData({
+      title: "",
+      description: "",
+      language: "",
+      code: "",
+    });
   };
 
   useEffect(() => {
@@ -131,6 +140,12 @@ function Profile() {
     dispatch(getUserInfo());
     dispatch(getMySnippets());
 
+    setFormData({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+    });
+
     if (!selectedFile) {
       setPreview(undefined);
       return;
@@ -140,7 +155,16 @@ function Profile() {
     setPreview(objectUrl);
 
     // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+      setFormData({
+        title: "",
+        description: "",
+        language: "",
+        code: "",
+      });
+    };
+
     // dispatch(reset());
   }, [selectedFile]);
 
