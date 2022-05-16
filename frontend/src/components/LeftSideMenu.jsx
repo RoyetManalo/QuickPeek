@@ -6,14 +6,17 @@ function LeftSideMenu() {
 
   // const listItems = following.map((number) => <li>{number}</li>);
 
+  const yourFollowing = [...following];
+  yourFollowing.splice(10, yourFollowing.length - 10);
+
   return (
     <div className="leftSideMenu">
       <Link to="me/following">
         <h3>Following</h3>
       </Link>
       <ul>
-        {following.length > 0
-          ? following.map((follow) => {
+        {yourFollowing.length > 0
+          ? yourFollowing.map((follow) => {
               return (
                 <li key={follow._id}>
                   <Link to={`/profile/${follow._id}`}>
