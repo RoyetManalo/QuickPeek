@@ -96,30 +96,30 @@ function CurrentUserSnippet() {
               <img
                 src={require("../img/user.jpg")}
                 style={{
-                  width: "100px",
+                  width: "60px",
                   position: "absolute",
                   top: "0",
-                  left: "0.5rem",
+                  left: "1rem",
                   borderRadius: "50%",
                 }}
               />
-              <span
+              {/* <span
                 style={{
                   position: "absolute",
-                  top: "6.5rem",
-                  left: "0",
+                  top: "3.5rem",
+                  left: "1rem",
                   borderRadius: "50%",
                 }}
               >
                 {snip.user.firstName} {snip.user.lastName}
-              </span>
+              </span> */}
               <section className="center">
                 <h2>{snip.title}</h2>
                 <div>
                   <span className="date">
                     {new Date(snip.createdAt).toLocaleString("en-US")}
                   </span>
-                  <p>{snip.description}</p>
+                  <p style={{ marginTop: "2rem" }}>{snip.description}</p>
                 </div>
               </section>
               <div className="code-container mt-3">

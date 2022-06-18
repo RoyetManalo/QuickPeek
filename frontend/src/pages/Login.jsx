@@ -45,12 +45,12 @@ function Login() {
   };
   return (
     <div className="login">
-      <section className="heading">
+      {/* <section className="heading">
         <h1 className="title">
           <FaSignInAlt />
           Login
         </h1>
-      </section>
+      </section> */}
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
@@ -60,7 +60,7 @@ function Login() {
               id="email"
               name="email"
               value={email}
-              placeholder="Enter your email"
+              placeholder="Email"
               onChange={onChange}
               required
             />
@@ -72,7 +72,7 @@ function Login() {
               id="password"
               name="password"
               value={password}
-              placeholder="Enter your password"
+              placeholder="Password"
               onChange={onChange}
               required
             />

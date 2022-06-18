@@ -89,18 +89,18 @@ function FullSnippet() {
           <img
             src={require("../img/user.jpg")}
             style={{
-              width: "100px",
+              width: "50px",
               position: "absolute",
               top: "0",
-              left: "0.5rem",
+              left: "2.5rem",
               borderRadius: "50%",
             }}
           />
           <span
             style={{
               position: "absolute",
-              top: "6.5rem",
-              left: "0.6rem",
+              top: "3.5rem",
+              left: "1rem",
               borderRadius: "50%",
             }}
           >
@@ -112,7 +112,7 @@ function FullSnippet() {
               <span className="date">
                 {new Date(snip.createdAt).toLocaleString("en-US")}
               </span>
-              <p>{snip.description}</p>
+              <p style={{ marginTop: "2rem" }}>{snip.description}</p>
             </div>
           </section>
           <div className="code-container mt-3">

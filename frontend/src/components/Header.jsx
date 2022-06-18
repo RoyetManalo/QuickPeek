@@ -51,11 +51,11 @@ function Header() {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="logo">
+        <div className="header-logo-div">
           <Link to="/">
             <img
-              src={require("../img/qplogo.png")}
-              className="logo"
+              src={require("../img/logo.png")}
+              className="header-logo"
               alt="logo"
             />
           </Link>
@@ -85,7 +85,7 @@ function Header() {
               alt=""
               style={{ width: "40px", borderRadius: "50%" }}
             />
-            <span style={{ color: "#353535" }}>
+            <span style={{ color: "#353535" }} className="header-username">
               {user.firstName} {user.lastName}
             </span>
             <FaChevronDown style={{ color: "#000" }} />

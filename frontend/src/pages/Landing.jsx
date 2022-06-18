@@ -31,26 +31,9 @@ function Landing() {
     <div className="landing grid grid-2">
       <div className="landing-left">
         <div className="landing-logo">
-          <img
-            src={require("../img/qplogo.png")}
-            alt=""
-            style={{ width: "220px" }}
-          />
+          <img src={require("../img/logo.png")} alt="" />
         </div>
-        <div className="landing-content">
-          <h1 className="center">Forgot how to center a div ?</h1>
-          <p className="center">
-            Register now to store all of your snippets, and see other devs what
-            code snippets they have
-          </p>
-        </div>
-        <img
-          src={require("../img/abstract code.jpg")}
-          alt=""
-          style={{ width: "1360px" }}
-        />
-      </div>
-      <div className="landing-right">
+
         <div className="loginRegister flex">
           <h1
             onClick={onChoose}
@@ -67,8 +50,18 @@ function Landing() {
         </div>
         {choosen === "Register" ? <Register /> : <Login />}
         <footer className="sticky">
-          <p className="center">A Personal Project by Royet Manalo</p>
+          <p className="center">Copyright &copy; 2022</p>
         </footer>
+      </div>
+      <div className="landing-right">
+        <div className="right-content">
+          <h1>Forgot how to center a div?</h1>
+          <p>
+            Register now to store all of your code snippets, and take a peek
+            quickly when you need them. Follow other developers to see what code
+            snippets they have.
+          </p>
+        </div>
       </div>
     </div>
   );
