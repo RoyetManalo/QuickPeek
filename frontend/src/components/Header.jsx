@@ -51,7 +51,7 @@ function Header() {
   return (
     <header className="header">
       <div className="header-container">
-        <div className="header-logo-div">
+        <div className="left-header">
           <Link to="/">
             <img
               src={require("../img/logo.png")}
@@ -59,8 +59,6 @@ function Header() {
               alt="logo"
             />
           </Link>
-        </div>
-        <div>
           <form onSubmit={onSearch}>
             <input
               type="text"
@@ -73,12 +71,13 @@ function Header() {
             />
           </form>
         </div>
-        <div className="addSnippetBtn">
-          <button className="headerBtn" onClick={onFormOpen}>
-            <FaPlus />
-          </button>
-        </div>
-        <div>
+
+        <div className="right-header">
+          <div className="addSnippetBtn">
+            <button className="headerBtn" onClick={onFormOpen}>
+              <FaPlus />
+            </button>
+          </div>
           <div className="userIcon" onClick={showSetting}>
             <img
               src={require("../img/user.jpg")}
@@ -91,8 +90,8 @@ function Header() {
             <FaChevronDown style={{ color: "#000" }} />
           </div>
         </div>
+        {showSettings && <UserSetting />}
       </div>
-      {showSettings && <UserSetting />}
     </header>
   );
 }

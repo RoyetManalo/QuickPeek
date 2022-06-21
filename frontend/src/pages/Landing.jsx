@@ -28,7 +28,7 @@ function Landing() {
   });
 
   return (
-    <div className="landing grid grid-2">
+    <div className="landing">
       <div className="landing-left">
         <div className="landing-logo">
           <img src={require("../img/logo.png")} alt="" />
@@ -49,9 +49,6 @@ function Landing() {
           </h1>
         </div>
         {choosen === "Register" ? <Register /> : <Login />}
-        <footer className="sticky">
-          <p className="center">Copyright &copy; 2022</p>
-        </footer>
       </div>
       <div className="landing-right">
         <div className="right-content">
